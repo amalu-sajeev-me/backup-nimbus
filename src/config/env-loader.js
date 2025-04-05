@@ -3,12 +3,9 @@
  */
 import dotenv from 'dotenv';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import logger from '../utils/logger.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+// Use process.cwd() instead which works in both normal and test environments
 function loadEnvironmentVariables() {
   const result = dotenv.config({ 
     path: path.resolve(process.cwd(), '.env') 
