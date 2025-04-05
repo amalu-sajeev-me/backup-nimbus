@@ -1,0 +1,27 @@
+{
+  "name": "backupnimbus",
+  "version": "1.0.0",
+  "description": "BackupNimbus is a fully automated, AWS-native backup system designed to protect and preserve your MongoDB Atlas data with zero human intervention. Built with Node.js, AWS Lambda, Docker, and EventBridge, this serverless solution performs daily encrypted backups using mongodump, stores them in Amazon S3, and secures credentials via AWS Systems Manager (SSM) — all without relying on external cron jobs or third-party infrastructure",
+  "keywords": [
+    "AWS",
+    "MONGODB",
+    "S3"
+  ],
+  "license": "ISC",
+  "author": "AMALU SAJEEV",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start:dev": "node --watch --env-file=.env index.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1692.0",
+    "dotenv": "^16.4.7",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0"
+  }
+}
