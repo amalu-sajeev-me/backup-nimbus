@@ -15,20 +15,20 @@ import logger from './logger.js';
  */
 function executeCommand(command, timeout = 60000, options = {}) {
   const maxBuffer = options.maxBuffer || 20 * 1024 * 1024; // Default 20MB
-  
+
   logger.info(`Executing: ${command}`);
   logger.debug(`Timeout: ${timeout}ms`);
-  
+
   return new Promise((resolve, reject) => {
     // Execute command with timeout
-    const childProcess = exec(command, { 
+    const childProcess = exec(command, {
       maxBuffer,
-      timeout 
+      timeout,
     });
-    
+
     let stdoutChunks = [];
     let stderrChunks = [];
-    
+
     // Capture stdout
     childProcess.stdout.on('data', (data) => {
       stdoutChunks.push(data);
@@ -40,18 +40,18 @@ function executeCommand(command, timeout = 60000, options = {}) {
         }
       }
     });
-    
+
     // Capture stderr
     childProcess.stderr.on('data', (data) => {
       stderrChunks.push(data);
       logger.error(`Error: ${data.toString().trim()}`);
     });
-    
+
     // Handle process completion
     childProcess.on('close', (code) => {
       const stdout = stdoutChunks.join('');
       const stderr = stderrChunks.join('');
-      
+
       if (code === 0) {
         logger.info(`Command completed successfully with exit code ${code}`);
         resolve(stdout);
@@ -61,7 +61,7 @@ function executeCommand(command, timeout = 60000, options = {}) {
         reject(new Error(`Command failed: ${errorMessage}`));
       }
     });
-    
+
     // Handle process errors (e.g., command not found)
     childProcess.on('error', (error) => {
       logger.error(`Process error: ${error.message}`);
@@ -77,10 +77,8 @@ function executeCommand(command, timeout = 60000, options = {}) {
  */
 async function commandExists(command) {
   try {
-    const checkCmd = process.platform === 'win32' 
-      ? `where ${command}`
-      : `which ${command}`;
-    
+    const checkCmd = process.platform === 'win32' ? `where ${command}` : `which ${command}`;
+
     await executeCommand(checkCmd, 5000);
     return true;
   } catch (error) {

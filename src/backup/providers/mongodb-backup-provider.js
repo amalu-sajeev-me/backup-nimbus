@@ -12,21 +12,17 @@ class MongoDBBackupProvider extends BackupProvider {
     this.config = {
       timeout: 600000,
       excludeCollections: [],
-      ...config
+      ...config,
     };
   }
-  
+
   async createBackup(connectionString) {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const archiveName = `mongodb-backup-${timestamp}.gz`;
     const archivePath = path.join('/tmp', archiveName);
-    
-    const command = buildMongoDumpCommand(
-      connectionString,
-      archivePath,
-      this.config
-    );
-    
+
+    const command = buildMongoDumpCommand(connectionString, archivePath, this.config);
+
     await executeCommand(command, this.config.timeout);
     return archivePath;
   }

@@ -10,42 +10,42 @@ class S3StorageProvider extends StorageProvider {
   constructor(bucketName, config = {}) {
     super();
     this.bucketName = bucketName;
-    
+
     this.s3 = new AWS.S3({
       maxRetries: config.maxRetries || 3,
-      retryDelayOptions: { base: config.retryDelayBase || 1000 }
+      retryDelayOptions: { base: config.retryDelayBase || 1000 },
     });
   }
-  
+
   async uploadFile(filePath, options = {}) {
     const fileName = path.basename(filePath);
     const fileStream = fs.createReadStream(filePath);
-    
+
     const params = {
       Bucket: this.bucketName,
       Key: fileName,
       Body: fileStream,
-      ContentType: options.contentType || 'application/gzip'
+      ContentType: options.contentType || 'application/gzip',
     };
-    
+
     return this.s3.upload(params).promise();
   }
-  
+
   async deleteFile(key) {
     const params = {
       Bucket: this.bucketName,
-      Key: key
+      Key: key,
     };
-    
+
     return this.s3.deleteObject(params).promise();
   }
-  
+
   async listFiles(prefix = '') {
     const params = {
       Bucket: this.bucketName,
-      Prefix: prefix
+      Prefix: prefix,
     };
-    
+
     return this.s3.listObjectsV2(params).promise();
   }
 }

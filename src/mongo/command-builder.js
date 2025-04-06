@@ -8,15 +8,15 @@ function buildMongoDumpCommand(uri, outputPath, options = {}) {
     `--archive=${outputPath}`,
     '--gzip',
     '--numParallelCollections=2',
-    '--readPreference=secondary'
+    '--readPreference=secondary',
   ];
-  
+
   if (options.excludeCollections?.length > 0) {
-    options.excludeCollections.forEach(collection => {
+    options.excludeCollections.forEach((collection) => {
       commandParts.push(`--excludeCollection=${collection}`);
     });
   }
-  
+
   return commandParts.join(' ');
 }
 

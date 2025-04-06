@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Testing
+coverage/
+tests/
+**/*.test.js
+**/__tests__/
+jest.config.js
+
+# Build output
+dist/
+build/
+
+# Misc
+.github/
+.vscode/

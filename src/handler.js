@@ -14,43 +14,43 @@ import fs from 'fs';
 const handler = async (event, context) => {
   // Setup dependencies
   const configProvider = new EnvironmentConfigProvider();
-  
+
   const backupProvider = new MongoDBBackupProvider({
     timeout: 840000,
-    excludeCollections: ['zipcodes']
+    excludeCollections: ['zipcodes'],
   });
-  
+
   const bucketName = configProvider.get('AWS_S3_BUCKET_NAME');
   const storageProvider = new S3StorageProvider(bucketName, {
     maxRetries: 3,
-    retryDelayBase: 1000
+    retryDelayBase: 1000,
   });
-  
+
   // Create service with dependencies
   const backupService = new BackupService(backupProvider, storageProvider, configProvider);
-  
+
   let backupPath;
   try {
     logger.info('Starting backup process');
     backupPath = await backupService.performBackup();
-    
+
     logger.info('Backup completed successfully');
     return {
       statusCode: 200,
       body: JSON.stringify({
         message: 'Backup completed successfully',
-        backupFile: backupPath
-      })
+        backupFile: backupPath,
+      }),
     };
   } catch (error) {
     logger.error('Backup failed:', error.message);
-    
+
     return {
       statusCode: 500,
       body: JSON.stringify({
         message: 'Backup operation failed',
-        error: error.message
-      })
+        error: error.message,
+      }),
     };
   } finally {
     // Cleanup

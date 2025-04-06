@@ -7,7 +7,7 @@ const plainTextVariables = ['AWS_REGION'];
 
 function decodeEnvironmentVariable(name, value, decode = true) {
   if (!value) return undefined;
-  
+
   if (decode && !plainTextVariables.includes(name)) {
     try {
       return Buffer.from(value, 'base64').toString('utf-8');
@@ -16,7 +16,7 @@ function decodeEnvironmentVariable(name, value, decode = true) {
       return value;
     }
   }
-  
+
   return value;
 }
 
@@ -26,8 +26,4 @@ function isBase64(str) {
   return base64Regex.test(str) && str.length % 4 === 0;
 }
 
-export { 
-  decodeEnvironmentVariable,
-  isBase64,
-  plainTextVariables
-};
+export { decodeEnvironmentVariable, isBase64, plainTextVariables };
