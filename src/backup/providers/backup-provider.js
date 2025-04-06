@@ -2,7 +2,7 @@
  * Abstract backup provider interface
  */
 class BackupProvider {
-  async createBackup(options) {
+  async createBackup(_options) {
     throw new Error('Method not implemented');
   }
 

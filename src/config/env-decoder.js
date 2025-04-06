@@ -13,6 +13,7 @@ function decodeEnvironmentVariable(name, value, decode = true) {
       return Buffer.from(value, 'base64').toString('utf-8');
     } catch (error) {
       logger.warn(`Failed to decode ${name}, returning raw value`);
+      logger.debug(`Error decoding ${name}: ${error.message}`);
       return value;
     }
   }

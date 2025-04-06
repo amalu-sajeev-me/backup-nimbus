@@ -31,10 +31,11 @@ function executeCommand(command, timeout = 60000, options = {}) {
 
     // Capture stdout
     childProcess.stdout.on('data', (data) => {
-      stdoutChunks.push(data);
+      const dataStr = data.toString();
+      stdoutChunks.push(dataStr);
       // Only log important progress updates to avoid flooding logs
-      if (data.includes('%')) {
-        const progressLine = data.toString().trim();
+      if (dataStr.includes('%')) {
+        const progressLine = dataStr.trim();
         if (progressLine.includes('100.0%') || progressLine.match(/\d{2}\.0%/)) {
           logger.info(`Progress: ${progressLine}`);
         }
@@ -82,6 +83,7 @@ async function commandExists(command) {
     await executeCommand(checkCmd, 5000);
     return true;
   } catch (error) {
+    logger.warn(`Command "${command}" does not exist: ${error.message}`);
     return false;
   }
 }

@@ -11,6 +11,16 @@ export default [
       globals: {
         // Node.js globals
         process: 'readonly',
+        Buffer: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        require: 'readonly',
+        module: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
         // Jest globals
         jest: 'readonly',
         describe: 'readonly',

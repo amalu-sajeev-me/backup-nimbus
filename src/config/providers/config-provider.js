@@ -2,11 +2,11 @@
  * Interface for retrieving configuration
  */
 class ConfigProvider {
-  get(key) {
+  get(_key) {
     throw new Error('Method not implemented');
   }
 
-  has(key) {
+  has(_key) {
     throw new Error('Method not implemented');
   }
 }

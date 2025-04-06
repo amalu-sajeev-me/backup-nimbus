@@ -11,7 +11,7 @@ import fs from 'fs';
  * @param {Object} context - Lambda context
  * @returns {Promise<Object>} - Response object
  */
-const handler = async (event, context) => {
+const handler = async (_event, _context) => {
   // Setup dependencies
   const configProvider = new EnvironmentConfigProvider();
 
